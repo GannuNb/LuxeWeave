@@ -8,6 +8,8 @@ import Signup from "./pages/Signup";
 import Navbar from "./pages/Navbar";
 import Login from "./pages/Login";
 import Userprofile from "./pages/Userprofile";
+import Footer from "./pages/Footer";
+import Products from "./pages/Products";
 
 function App() {
   return (
@@ -18,7 +20,9 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login/>}/>
         <Route path="/userprofile" element={<Userprofile />} />
+        <Route path="/products" element={<Products />} />
       </Routes>
+      <Footer/>
     </Router>
   );
 }

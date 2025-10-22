@@ -1,13 +1,16 @@
 # Node modules for backend and frontend
 backend/node_modules/
 frontend/node_modules/
+seller/node_modules/
 
 # Build outputs
 frontend/build/
+seller/build/
 
 # Environment variable files
 backend/.env
 frontend/.env
+seller/.env
 
 # Logs
 *.log

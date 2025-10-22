@@ -14,45 +14,49 @@ const Login = () => {
   };
 
   // Email/Phone + Password Login
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_URL}/auth/login`,
-        form
-      );
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_URL}/auth/login`,
+      form
+    );
 
-      setMessage(res.data.message);
-      localStorage.setItem("token", res.data.token);
+    setMessage(res.data.message);
+    localStorage.setItem("token", res.data.token);
 
-      // Navigate home
-      navigate("/");
-    } catch (err) {
-      console.error(err);
-      setMessage(err.response?.data?.message || "Login failed");
-    }
-  };
+    // Force redirect + refresh in one go
+    window.location.href = "/";
+  } catch (err) {
+    console.error(err);
+    setMessage(err.response?.data?.message || "Login failed");
+  }
+};
+
 
   // Google Login
-  const handleGoogleSuccess = async (credentialResponse) => {
-    try {
-      const decoded = jwtDecode(credentialResponse.credential);
-      console.log("Google user:", decoded);
+// Google Login
+const handleGoogleSuccess = async (credentialResponse) => {
+  try {
+    const decoded = jwtDecode(credentialResponse.credential);
+    console.log("Google user:", decoded);
 
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_URL}/auth/google`,
-        { token: credentialResponse.credential }
-      );
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_URL}/auth/google`,
+      { token: credentialResponse.credential }
+    );
 
-      setMessage(res.data.message);
-      localStorage.setItem("token", res.data.token);
+    setMessage(res.data.message);
+    localStorage.setItem("token", res.data.token);
 
-      navigate("/");
-    } catch (err) {
-      console.error(err);
-      setMessage("Google login failed");
-    }
-  };
+    // Force redirect + refresh (same as email login)
+    window.location.href = "/";
+  } catch (err) {
+    console.error(err);
+    setMessage("Google login failed");
+  }
+};
+
 
   const handleGoogleFailure = () => {
     setMessage("Google login failed");
