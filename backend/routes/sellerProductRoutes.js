@@ -20,19 +20,19 @@ router.post(
     try {
       const { name, description, price, category } = req.body;
 
-      const newProduct = new Product({
-        sellerId: req.seller.id,
-        name,
-        description,
-        price,
-        category,
-        image: req.file
-          ? {
-              data: req.file.buffer,
-              contentType: req.file.mimetype,
-            }
-          : null,
-      });
+const newProduct = new Product({
+  sellerId: req.seller.id,
+  name,
+  description,
+  price,
+  category,
+  image: req.file
+    ? { data: req.file.buffer, contentType: req.file.mimetype }
+    : null,
+  isApproved: false,
+  approvalStatus: "Pending",
+});
+
 
       await newProduct.save();
       res.status(201).json({ message: "✅ Product added successfully!" });

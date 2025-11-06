@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Products() {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -15,6 +17,11 @@ function Products() {
     };
     fetchProducts();
   }, []);
+
+  const handleBuyClick = (product) => {
+    // ✅ pass full product to ProductSpecification
+    navigate(`/product-specification/${product._id}`, { state: { product } });
+  };
 
   return (
     <div className="container mt-4">
@@ -29,7 +36,11 @@ function Products() {
               <div className="card shadow-sm h-100">
                 {p.image ? (
                   <img
-                    src={p.image}
+                    src={
+                      p.image.startsWith("data:")
+                        ? p.image
+                        : `${process.env.REACT_APP_API_URL}/products/image/${p._id}`
+                    }
                     alt={p.name}
                     className="card-img-top"
                     style={{ height: "250px", objectFit: "cover" }}
@@ -44,12 +55,16 @@ function Products() {
                 )}
                 <div className="card-body">
                   <h5 className="card-title">{p.name}</h5>
-                  <p className="card-text">{p.description}</p>
+                  <p className="card-text text-truncate">{p.description}</p>
                   <p className="text-muted">Category: {p.category}</p>
                   <h6>💰 ₹{p.price}</h6>
-                  <p className="text-secondary" style={{ fontSize: "0.9rem" }}>
-                    Seller: {p.seller}
-                  </p>
+
+                  <button
+                    className="btn btn-primary mt-2 w-100"
+                    onClick={() => handleBuyClick(p)}
+                  >
+                    View Product
+                  </button>
                 </div>
               </div>
             </div>

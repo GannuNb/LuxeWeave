@@ -8,6 +8,8 @@ import sellerAuthRoutes from "./routes/sellerAuthRoutes.js";
 import sellerProductRoutes from "./routes/sellerProductRoutes.js";
 import sellerOrderRoutes from "./routes/sellerOrderRoutes.js";
 import productRoutes from "./routes/productroutes.js";
+import adminRoutes from "./routes/adminRoutes.js"; // ✅ added this line
+import userProductRoutes from "./routes/userProductRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -21,8 +23,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/sellerauth", sellerAuthRoutes);
 app.use("/api/sellerrouting", sellerProductRoutes);
 app.use("/api/seller", sellerOrderRoutes);
-
 app.use("/api/products", productRoutes);
+app.use("/api/admin", adminRoutes); // ✅ added this line
+app.use("/api/user-products", userProductRoutes);
 
 
 // 🧩 MongoDB Connection

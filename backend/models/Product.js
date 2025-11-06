@@ -1,3 +1,4 @@
+// models/Product.js
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
@@ -12,8 +13,14 @@ const productSchema = new mongoose.Schema(
     price: { type: Number, required: true },
     category: String,
     image: {
-      data: Buffer, // Binary data (image stored directly)
-      contentType: String, // e.g., image/png
+      data: Buffer,
+      contentType: String,
+    },
+    isApproved: { type: Boolean, default: false },
+    approvalStatus: {
+      type: String,
+      enum: ["Pending", "Approved", "Rejected"],
+      default: "Pending",
     },
   },
   { timestamps: true }
